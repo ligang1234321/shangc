@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<!--  http-equiv="Access-Control-Allow-Origin" content="*" -->
+		<!-- Response.ContentType = "application/javascript" -->
+		<script src="javascripts/echarts.js"></script>
+		<title></title>
+		<style>
+			*{margin: 0;padding: 0;}
+			li{list-style: none;}
+			body{
+				width: 100%;
+				height: 100vh;
+			}
+			h1{
+				width: 80%;
+				height: 80px;
+				margin: 10px auto 0;
+				text-align: center;
+				line-height: 80px;
+				color: aliceblue;
+				background-color: mediumslateblue;
+			}
+			.con{
+				width: 80%;
+				height: auto;
+				color: aliceblue;
+				background-color: antiquewhite;
+				margin: 0 auto;
+			}
+			.left{
+				width: 30%;
+				height: auto;
+				/* background-color: #999; */
+				color: aliceblue;
+				float: left;
+			}
+			.right{
+				width: 70%;
+				height: 100vh;
+				/* background-color: antiquewhite; */
+				float: right;
+				color: black;
+			}
+			.leftcon{
+				width: 100%;
+				height: auto;
+				cursor: pointer;
+			}
+			.user{
+				width: 100%;
+				height: auto;
+			}
+			.user>p{
+				width: 100%;
+				height: 30px;
+				font-size: 16px;
+				background-color: #999;
+				text-align: center;
+				line-height: 30px;
+				border-bottom: 1px solid #ccc;
+			}
+			.user>div{
+				width: 100%;
+				height: 30px;
+				font-size: 14px;
+				background-color: #999;
+				text-align: right;
+				line-height: 30px;
+				border-bottom: 1px solid #ccc;
+				display: none;
+			}
+			.user>div p{
+				margin-right: 40px;
+			}
+			.shopss{
+				width: 100%;
+				height: auto;
+			}
+			.shopss>p{
+				width: 100%;
+				height: 30px;
+				font-size: 16px;
+				background-color: #999;
+				text-align: center;
+				line-height: 30px;
+				border-bottom: 1px solid #ccc;
+			}
+			.shopss>div{
+				width: 100%;
+				height: 30px;
+				font-size: 14px;
+				background-color: #999;
+				text-align: right;
+				line-height: 30px;
+				border-bottom: 1px solid #ccc;
+				display: none;
+			}
+			.shopss>div p{
+				margin-right: 20px;
+			}
+			.orderss{
+				width: 100%;
+				height: auto;
+			}
+			.orderss>p{
+				width: 100%;
+				height: 30px;
+				font-size: 16px;
+				background-color: #999;
+				text-align: center;
+				line-height: 30px;
+				border-bottom: 1px solid #ccc;
+			}
+			.orderss>div{
+				width: 100%;
+				height: 30px;
+				font-size: 14px;
+				background-color: #999;
+				text-align: right;
+				line-height: 30px;
+				border-bottom: 1px solid #ccc;
+				display: none;
+			}
+			.orderss>div p{
+				margin-right: 20px;
+			}
+			/* 右边 */
+			.userright{
+				width: 100%;
+				height: 100vh;
+			}
+			.shopsright{
+				width: 100%;
+				height: 100vh;
+				display: none;
+			}
+			.ordersright{
+				width: 100%;
+				height: 100vh;
+				display: none;
+			}
+			.userright>ul{
+				width: 80%;
+				height: auto;
+				margin: 0 auto;
+				display: flex;
+				justify-content: space-evenly;
+				flex-wrap: wrap;
+			}
+			.yonghu h1{
+				width: 100%;
+				height: 80px;
+				margin: 10px auto 20px;
+				text-align: center;
+				line-height: 80px;
+				color: aquamarine;
+				background-color: #ccc;
+			}
+			.userright>ul>li{
+				border: 1px solid #999;
+				width: 100%;
+				height: 30px;
+				display: flex;
+				justify-content: space-between;
+				text-align: center;
+				line-height: 30px;
+			}
+			.shopsright h1{
+				width: 100%;
+				height: 80px;
+				margin: 10px auto 20px;
+				text-align: center;
+				line-height: 80px;
+				color: aquamarine;
+				background-color: #ccc;
+			}
+			.shopsright table{
+				width: 100%;
+			}
+			.shopsright table td{
+				text-align: center;
+			}
+			.addshop{
+				width: 100px;
+				height: 50px;
+				font-size: 18px;
+				background-color: aquamarine;
+				float: right;
+			}
+			.echart{
+				width: 100px;
+				height: 50px;
+				font-size: 18px;
+				background-color: blueviolet;
+				float: right;
+				
+			}
+			.echar{
+				width: 50%;
+				height: 520px;
+				background-color: rgba(114, 112, 123, .9);
+				position: fixed;
+				top: 20%;
+				right: 15%;
+				display: none;
+			}
+			.echars1{
+				width: 100%;
+				height: 500px;
+				position: absolute;
+				bottom: 0;
+				right: 0;
+				z-index: 20;
+				/* background-color: aqua; */
+			}
+			.echars{
+				width: 100%;
+				height: 100%;
+				color: orange;
+				/* background-color: red; */
+			}
+			.close3{
+				width: 20px;
+				height: 20px;
+				font-size: 18px;
+				background-color: #999;
+				text-align: center;
+				line-height: 20px;
+				float: right;
+			}
+			.motaikuang{
+				width: 50%;
+				height: 500px;
+				background-color: rgba(114, 112, 123, .9);
+				position: fixed;
+				top: 20%;
+				right: 15%;
+				display: none;
+			}
+
+			.form2{
+				width: 80%;
+				height: 400px;
+				margin: 10% 100px;
+			}
+			.form2 input{
+				width: 300px;
+				height: 30px;
+				font-size: 24px;
+				font-weight: bolder;
+				margin-bottom: 20px;
+			}
+			.form2 input:nth-of-type(1){
+				margin-left: 10px;
+			}
+			.form2 input:nth-of-type(3){
+				font-size: 16px;
+			}
+			.form2 input:nth-of-type(5){
+				width: 200px;
+				height: 50px;
+				background-color: aqua;
+				margin-left: 30%;
+			}
+			.close1{
+				width: 21px;
+				height: 21px;
+				font-size: 18px;
+				background-color: #999;
+				text-align: center;
+				line-height: 21px;
+				position: absolute;
+				top: 20px;
+				right: 30px;
+				z-index: 20;
+			}
+			.motaikuang2{
+				width: 50%;
+				height: 500px;
+				background-color: rgba(114, 112, 123, .9);
+				position: fixed;
+				top: 20%;
+				right: 15%;
+				display: none;
+			}
+			
+			.form1{
+				width: 80%;
+				height: 400px;
+				margin: 10% 100px;
+			}
+			.form1 input{
+				width: 300px;
+				height: 30px;
+				font-size: 24px;
+				font-weight: bolder;
+				margin-bottom: 20px;
+			}
+			.form1 input:nth-of-type(1){
+				margin-left: 10px;
+			}
+			.form1 input:nth-of-type(3){
+				font-size: 16px;
+			}
+			.form1 input:nth-of-type(5){
+				width: 200px;
+				height: 50px;
+				background-color: aqua;
+				margin-left: 30%;
+			}
+			.close2{
+				width: 21px;
+				height: 21px;
+				font-size: 18px;
+				background-color: #999;
+				text-align: center;
+				line-height: 21px;
+				position: absolute;
+				top: 20px;
+				right: 30px;
+				z-index: 20;
+			}
+			/* 订单开始 */
+			.ordersright h1{
+				width: 100%;
+				height: 80px;
+				margin: 10px auto 80px;
+				text-align: center;
+				line-height: 80px;
+				color: aquamarine;
+				background-color: #ccc;
+			}
+			.conten{
+				width: 90%;
+				height: auto;
+				background-color: rgba(255, 255, 255, 1);
+				border: 1px solid #ccc;
+				margin: 40px auto 0;
+				text-align: right;
+			}
+			.time{
+				width: 90%;
+				height: 50px;
+				margin: 10px auto 0;
+				border-bottom:1px solid orange ;
+				display: flex;
+				justify-content: space-between;
+				
+			}
+			.myshops{
+				width: 90%;
+				height: auto;
+				background-color: rgba(255, 255, 255, 1);
+				margin: 10px 0 0 20px;
+				/* padding-right: 20px; */
+				display: flex;
+				justify-content: space-evenly;
+				flex-wrap: wrap;
+			}
+			.myshops li{
+				width: 100%;
+				height: 47px;
+				background-color: powderblue;
+				border-bottom: 1px solid #ccc;
+				display: flex;
+				justify-content: space-between;
+				line-height: 47px;
+				font-size: 12px;
+				padding-right: 20px;
+			}
+			.myshops li img{
+				width: 38px;
+				height: 38px;
+				margin-top: 5px;
+				margin-left: 5px;
+			}
+			.conten>p{
+				text-align: right;
+				margin-top: 20px;
+				padding-right: 30px;
+			}
+			.conten>button{
+				width: 89px;
+				height: 33px;
+				color: rgba(128, 128, 128, 1);
+				background-color: rgba(255, 255, 255, 1);
+				box-shadow: rgba(166, 166, 166, 1) solid 1px;
+				font-size: 13px;
+				line-height: 33px;
+				text-align: center;
+				margin-top: 10px;
+				margin-bottom: 10px;
+				margin-right: 10px;
+			}
+			.zhuangtai{
+				/* display: flex; */
+				margin-left: 44.5%;
+				margin-top:-5%;
+				float: left;
+				display: none;
+			}
+			.zhuangtai li{
+				width: 80px;
+				height: 30px;
+				border: 1px solid antiquewhite;
+				background-color: #ccc;
+				text-align: center;
+				line-height: 30px;
+			}
+			.zhuangtai li:hover{
+				background-color: aquamarine;
+			}
+			.span{
+				display: none;
+			}
+			.echart2{
+				width: 100px;
+				height: 50px;
+				font-size: 18px;
+				background-color: blueviolet;
+				margin-top: -50px;
+				margin-right: 30px;
+				float: right;
+				
+			}
+			.echar4{
+				width:650px;
+				height: 520px;
+				background-color: rgba(114, 112, 123, .9);
+				position: fixed;
+				top: 20%;
+				right: 15%;
+				display: none;
+			}
+			.echars4{
+				width: 100%;
+				height: 500px;
+				position: absolute;
+				bottom: 0;
+				right: 0;
+				z-index: 20;
+			}
+			.echars3{
+				width: 100%;
+				height: 100%;
+				color: orange;
+			}
+			.close4{
+				width: 20px;
+				height: 20px;
+				font-size: 18px;
+				background-color: #999;
+				text-align: center;
+				line-height: 20px;
+				float: right;
+			}
+		</style>
+		
+	</head>
+	<body>
+		<h1>后台管理系统</h1>
+		<div class="con">
+			<div class="left">
+				<div class="leftcon">
+					<div class="user">
+						<p>用户管理</p>
+						<div><p>显示用户信息</p></div>
+					</div>
+					<div class="shopss">
+						<p>商品管理</p>
+						<div>
+							<p>显示所有商品信息</p>
+						</div>
+					</div>
+					<div class="orderss">
+						<p>订单管理</p>
+						<div><p>显示所有订单信息</p></div>
+					</div>
+				</div>
+			</div>
+			<div class="right">
+				
+				<div class="userright">
+					<ul class="yonghu">
+						<h1>用户信息</h1>
+						<li>
+							<p>用户名：<span></span></p>
+							<p>密码：<span></span></p>
+							<p>电话：<span></span></p>
+							<p>vip：<span></span></p>
+							<button onclick="delete1()">删除该用户</button>
+						</li>
+					</ul>
+					<span class="span"><%= data %></span>
+				</div>
+				<div class="shopsright">
+					<h1>商品信息管理</h1>
+					<table border="1">
+						<button class="addshop">添加商品</button>
+						<button class="echart">数据可视化</button>
+						<caption>
+							<td>图片</td>
+							<td>商品名</td>
+							<td>价格</td>
+							<td>种类</td>
+							<td></td>
+						</caption>
+						<tr class="twos">
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>
+								<button class="xiugai">修改</button>
+								<button class="delete2"">删除</button>
+							</td>
+						</tr>
+					</table>
+					<div class="motaikuang">
+						<div class="close1">X</div>					
+						<form class="form2" action="/houtai/shops/add1" method="POST" enctype="multipart/form-data">
+							商品  名：<input type="text" name="shopname"><br>
+							商品价格：<input type="text" name="pic"><br>
+							商品图片：<input type="file" value="上传图片" name="file"><br>
+							商品种类：<select name="shoplei">
+								<option name="shoplei">手机</option>
+							</select><br><br>
+							商品描述：<input type="text" name="title"><br>
+							<input type="submit" value="添加" class="add1">
+						</form>
+					</div>
+					<div class="motaikuang2">
+						<div class="close2">X</div>					
+						<form class="form1" action="/houtai/shops/xiugai" method="POST" enctype="multipart/form-data">
+							商品  名：<input type="text" name="shopname"><br>
+							商品价格：<input type="text" name="pic"><br>
+							商品图片：<input type="file" value="上传图片" name="file"><br>
+							商品种类：<select name="shoplei">
+								<option name="shoplei">手机</option>
+							</select><br><br>
+							商品描述：<input type="text" name="title"><br>
+							<input type="submit" value="修改" class="add1">
+						</form>
+					</div>
+					<div class="echar">
+						<div class="close3">X</div>	
+						<div class="echars1">
+							<div class="echars"></div>
+						</div>
+					</div>
+				</div>
+				<div class="ordersright">
+					<h1>订单管理</h1>
+					<button class="echart2">数据可视化</button>
+					<div class="conten">
+						<div class="time">
+							<p>时间：<span></span></p>
+							<p>状态：<span></span></p>
+						</div>
+						<ul class="myshops">
+							<li>
+								<img src="../public/images/0255d560fa1ebedbb04b70b6911f136f.jpg" alt="">
+								<p></p>
+								<p></p>
+								<p></p>
+							</li>
+						</ul>
+						<p>实付金额：<span></span>元</p>
+						<button class="xiugai2">修改订单状态</button>
+						<ul class="zhuangtai">
+							<li>已完成</li>
+							<li>已付款</li>
+							<li>未付款</li>
+							<li>已发货</li>
+						</ul>
+					</div>
+				</div>
+				<div class="echar4">
+					<div class="close4">X</div>	
+					<div class="echars4">
+						<div class="echars3"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<script>
+			//用户信息管理
+			//left
+			var user=document.querySelector('.user>p')
+			var shopss=document.querySelector('.shopss>p')
+			var orderss=document.querySelector('.orderss>p')
+			
+			var userd=document.querySelector('.user>div')
+			var shopssd=document.querySelector('.shopss>div')
+			var orderssd=document.querySelector('.orderss>div')
+			//点击显示
+			user.onclick=function(){
+				userd.style.display='block'
+				shopssd.style.display='none'
+				orderssd.style.display='none'
+				userd.style.background='#999'
+			}
+			shopss.onclick=function(){
+				userd.style.display='none'
+				shopssd.style.display='block'
+				orderssd.style.display='none'
+				shopssd.style.background='#999'
+			}
+			orderss.onclick=function(){
+				userd.style.display='none'
+				shopssd.style.display='none'
+				orderssd.style.display='block'
+				orderssd.style.background='#999'
+			}
+			//点击改变颜色
+			//点击切换右边得内容
+			var userright=document.querySelector('.userright')
+			var shopsright=document.querySelector('.shopsright')
+			var ordersright=document.querySelector('.ordersright')
+			userd.onmousedown=function(){
+				//左边颜色改变
+				userd.style.background='orange'
+				shopssd.style.background='#999'
+				orderssd.style.background='#999'
+				//右边用户内容
+				userright.style.display='block'
+				shopsright.style.display='none'
+				ordersright.style.display='none'
+			}
+			shopssd.onmousedown=function(){
+				userd.style.background='#999'
+				shopssd.style.background='orange'
+				orderssd.style.background='#999'
+				//右边用户内容
+				userright.style.display='none'
+				shopsright.style.display='block'
+				ordersright.style.display='none'
+			}
+			orderssd.onmousedown=function(){
+				userd.style.background='#999'
+				shopssd.style.background='#999'
+				orderssd.style.background='orange'
+				//右边用户内容
+				userright.style.display='none'
+				shopsright.style.display='none'
+				ordersright.style.display='block'
+			}
+			
+			
+			//将用户信息转换为数组
+			var span =document.querySelector('.span')
+			var yonghu=document.querySelector('.yonghu')
+			var yonghuli=document.querySelector('.yonghu>li')
+			
+			var newdata=JSON.parse(span.innerHTML)
+			for(var i=0;i<newdata.length;i++){
+				yonghu.appendChild(yonghuli.cloneNode(true))
+			}
+			yonghu.removeChild(yonghu.lastElementChild)
+			var btn=document.querySelectorAll('.yonghu>li button')
+			
+			let m=0
+			newdata.forEach(function(val,i,newdata){
+				m++
+				//每一个li的子元素
+				var name='name'+i
+				var pass='pass'+i
+				var phone='phone'+i
+				var vip='vip'+i
+				
+				name=document.querySelector('.yonghu>li:nth-of-type('+m+')>p:nth-of-type(1)>span')
+				pass=document.querySelector('.yonghu>li:nth-of-type('+m+')>p:nth-of-type(2)>span')
+				phone=document.querySelector('.yonghu>li:nth-of-type('+m+')>p:nth-of-type(3)>span')
+				vip=document.querySelector('.yonghu>li:nth-of-type('+m+')>p:nth-of-type(4)>span')
+				
+				name.innerHTML=newdata[i].name
+				pass.innerHTML=newdata[i].pass
+				phone.innerHTML=newdata[i].phone
+				vip.innerHTML=newdata[i].vip
+				
+				// 删除用户
+				btn[i].onclick=()=>{
+					//解决跨域
+					// Response.Headers.Add("Access-Control-Allow-Origin", "*");
+					var ajax = new XMLHttpRequest()
+					ajax.open('post','http://localhost:3000/houtai/users1/delete1')
+					ajax.send(JSON.stringify({name:name.innerHTML,phone:phone.innerHTML}))
+					ajax.onreadystatechange=function(){
+						if(ajax.readyState==4&&ajax.status==200){
+							if(ajax.responseText=='删除成功'){
+								location.reload()
+							}
+						}
+					}
+				}
+			})
+
+			//商品信息管理
+			var two = document.querySelector('.twos')
+			var table =document.querySelector('table')
+			var flag = true
+			shopssd.onclick=function(){
+				//商品种类
+				shopleis()
+				//点击显示商品信息
+				var ajax1 = new XMLHttpRequest()
+				ajax1.open('post','http://localhost:3000/houtai/shops')
+				ajax1.send()
+				ajax1.onreadystatechange=function(){
+					if(ajax1.readyState==4&&ajax1.status==200){
+						//ajax.responseText
+						if(flag){
+							flag=false
+							//商品信息渲染在页面上
+							var shops=JSON.parse(ajax1.responseText)
+							for(var i=0;i<shops.length;i++){
+								table.appendChild(two.cloneNode(true))
+							}
+							//删除原来的twos
+							document.querySelector('table>tbody').removeChild(document.querySelector('table>tbody>tr:nth-of-type(2)'))
+							
+							let m=0
+							var delete2=document.querySelectorAll('.delete2')
+							var xiugai=document.querySelectorAll('.xiugai')
+							shops.forEach(function(val,i,shops){
+								m++
+								//每一个tr的子元素
+								var src='src'+m
+								var shopname='shopname'+m
+								var pic='pic'+m
+								var shoplei='shoplei'+m
+								
+								src=document.querySelector('table>tr:nth-of-type('+m+')>td:nth-of-type(1)')
+								shopname=document.querySelector('table>tr:nth-of-type('+m+')>td:nth-of-type(2)')
+								pic=document.querySelector('table>tr:nth-of-type('+m+')>td:nth-of-type(3)')
+								shoplei=document.querySelector('table>tr:nth-of-type('+m+')>td:nth-of-type(4)')
+								
+								src.innerHTML=shops[i].src
+								shopname.innerHTML=shops[i].shopname
+								pic.innerHTML=shops[i].pic
+								shoplei.innerHTML=shops[i].shoplei
+								
+								//删除商品
+								delete2[i].onclick=()=>{
+									var ajax4 = new XMLHttpRequest()
+									ajax4.open('post','http://localhost:3000/houtai/shops/delete2')
+									
+									ajax4.send(JSON.stringify({shopname:shopname.innerHTML}))
+									ajax4.onreadystatechange=function(){
+										if(ajax4.readyState==4&&ajax4.status==200){
+											console.log(ajax4.responseText)
+										}
+									}
+								}
+								//修改商品
+								xiugai[i].onclick=()=>{
+									console.log(shopname.innerHTML)
+									shopleis1()
+									var motaikuang2=document.querySelector('.motaikuang2')
+									var close2 = document.querySelector('.close2')
+									
+									document.querySelector('.form1>input:nth-of-type(1)').value=shops[i].shopname
+									document.querySelector('.form1>input:nth-of-type(2)').value=shops[i].pic
+									document.querySelector('.form1>select').value=shops[i].shoplei
+									
+									motaikuang2.style.display='block'
+									close2.onclick=function(){
+										motaikuang2.style.display='none'
+									}
+								}
+							})
+							//数据可视化
+							var echart=document.querySelector('.echart')
+							var echar=document.querySelector('.echar')
+							var close3=document.querySelector('.close3')
+							echart.onclick=()=>{
+								echar.style.display='block'
+								//找到商品以及数量
+									var allshops=JSON.parse(ajax1.responseText)
+									let arr=[]
+									for(var a=0;a<allshops.length;a++){
+										let c=0
+										let obj={name:'',value:''}
+										for(var s=0;s<allshops.length;s++){
+											if(allshops[a].shopname==allshops[s].shopname){
+												c++
+												obj.name=allshops[a].shopname
+											}
+										}
+										obj.value=c
+										arr.push(obj)
+									}
+									//数组去重
+									for(var m1=0;m1<arr.length;m1++){
+										let g=0
+										for(var n=0;n<arr.length;n++){
+											if(arr[m1].name==arr[n].name){
+												g++
+												if(g>1){
+													arr.slice(n,1)
+												}
+											}
+										}
+									}
+									console.log(arr)
+									
+									// 基于准备好的dom，初始化echarts实例
+								    var myChart = echarts.init(document.getElementsByClassName('echars')[0]);
+									myChart.showLoading();
+									setTimeout(function(){
+										 myChart.hideLoading();
+										//衡中坐标的值
+										// var x=[]
+										// var y=[]
+										// for(var m2=0;m2<arr.length;m2++){
+										// 	// console.log(arr[m2])
+										// 	x[m2]=arr[m2].name
+										// 	y[m2]=arr[m2].g
+										// }
+										// 指定图表的配置项和数据
+										 //  var option = {
+											// title: {
+											//   text: '商品信息',
+											//   textStyle:{
+											// 	color:'pink',
+											// 	fontStyle:'italic',
+											// 	fontWeight:'bold',
+											// 	fontFamily:'Arial',
+											// 	textBorderColor:'green',
+											// 	textBorderWidth:'2',
+											// 	textBorderDashOffset:'2'
+											//   }
+											// },
+											// tooltip: {},
+											// legend: {
+											//   data: ['商品数量']
+											// },
+											// xAxis: {
+											//     data:x ,
+											// 	axisLabel: {
+											// 		 show: true,
+											// 		  textStyle: {
+											// 			color: 'blue',  //更改坐标轴文字颜色
+											// 			fontSize : 8      //更改坐标轴文字大小
+											// 		  }
+											// 	},
+											// },
+											// yAxis: {},
+											// series: [
+											//   {
+											// 	name: '商品数量',
+											// 	type: 'bar',
+											// 	data: y
+											//   }
+											// ]
+										 //  };
+										 option = {
+											 title: {
+											   text: '商品信息占比',
+											   textStyle:{
+											 	color:'pink',
+											 	fontStyle:'italic',
+											 	fontWeight:'bold',
+											 	fontFamily:'Arial',
+											 	textBorderColor:'green',
+											 	textBorderWidth:'2',
+											 	textBorderDashOffset:'2'
+											   }
+											 },
+										   series: [
+										     {
+										       type: 'pie',
+										       data:arr
+										     }
+										   ]
+										 };
+										
+									// 使用刚指定的配置项和数据显示图表。
+									myChart.setOption(option);
+									// setTimeout(function(){
+									// 	myChart.dispose()
+									// },3000)
+								},1000)
+							}
+							close3.onclick=()=>{
+								echar.style.display='none'
+							}
+							
+						}	
+					}
+				}
+			}
+			//给商品option赋值种类
+			function shopleis(){
+				var select=document.querySelector('.motaikuang select')
+				var option=document.querySelector('.motaikuang select>option:nth-of-type(1)')
+				var ajax = new XMLHttpRequest()
+				ajax.open('post','http://localhost:3000/houtai/shops/shopleis')
+				ajax.send()
+				ajax.onreadystatechange=function(){
+					if(ajax.readyState==4&&ajax.status==200){
+						var shopleis=JSON.parse(ajax.responseText)
+						
+						for(var j=0;j<shopleis.length;j++){
+							select.appendChild(option.cloneNode(true))
+						}
+						select.removeChild(select.firstElementChild)
+						
+						let m=0
+						shopleis.forEach(function(val,i,shopleis){
+							m++
+							//每一个option元素
+							var shoplei='shoplei'+m
+							shoplei=document.querySelector('.motaikuang select>option:nth-of-type('+m+')')
+							shoplei.innerHTML=shopleis[i].shoplei
+						})
+					}
+				}
+			}
+			function shopleis1(){
+				var select=document.querySelector('.motaikuang2 select')
+				var option=document.querySelector('.motaikuang2 select>option:nth-of-type(1)')
+				var ajax = new XMLHttpRequest()
+				ajax.open('post','http://localhost:3000/houtai/shops/shopleis')
+				ajax.send()
+				ajax.onreadystatechange=function(){
+					if(ajax.readyState==4&&ajax.status==200){
+						var shopleis=JSON.parse(ajax.responseText)
+						
+						for(var j=0;j<shopleis.length;j++){
+							select.appendChild(option.cloneNode(true))
+						}
+						select.removeChild(select.firstElementChild)
+						
+						let m=0
+						shopleis.forEach(function(val,i,shopleis){
+							m++
+							//每一个option元素
+							var shoplei='shoplei'+m
+							shoplei=document.querySelector('.motaikuang2 select>option:nth-of-type('+m+')')
+							shoplei.innerHTML=shopleis[i].shoplei
+						})
+					}
+				}
+			}
+			//添加商品
+			var addshop = document.querySelector('.addshop')
+			var motaikuang=document.querySelector('.motaikuang')
+			var close1 = document.querySelector('.close1')
+	
+			addshop.onclick=function(){
+				motaikuang.style.display='block'
+			}
+			close1.onclick=function(){
+				motaikuang.style.display='none'
+			}
+			//订单信息管理
+			var flage2=true
+			orderssd.onclick=function(){
+				flage2=false
+				var ajax = new XMLHttpRequest()
+				ajax.open('post','http://localhost:3000/houtai/orders')
+				ajax.send()
+				ajax.onreadystatechange=function(){
+					if(ajax.readyState==4&&ajax.status==200){
+						var arr2=[]
+						//循环找到时间
+						let arr=JSON.parse(ajax.responseText)
+						for(var i=0;i<arr.length;i++){
+							//同一时间内购买的商品订单
+							let obj={
+								time:'',
+								states:'',
+								info:[]
+							}
+							let alls=0
+							let m=0
+							for(var j=0;j<arr.length;j++){
+								
+								if(arr[i].time==arr[j].time){
+									//把订单页面所需要的转换成数组形式
+									//找到总价
+									alls+=arr[j].pic*arr[j].num
+									
+									obj.time=arr[j].time
+									obj.states=arr[j].states
+									
+									obj.info[m]=arr[j]
+									m++	
+								}
+							}
+							//总价添加进数组
+							obj.allpic=alls
+							arr2[i]=obj
+						}
+						//数组去重复
+						for(var i=0;i<arr2.length;i++){
+							let m=0
+							for(var j=0;j<arr2.length;j++){
+								if(arr2[i].time==arr2[j].time){
+									m++
+									if(m>1){
+										arr2.splice(j,1)
+									}
+								}
+							}
+						}
+						console.log(arr2)
+						//将所拿到的数据渲染到页面
+						var conten = document.querySelector('.conten')
+						var myshops = document.querySelector('.myshops')
+						
+						//克隆conten
+						for(var s=0;s<arr2.length;s++){
+							ordersright.appendChild(conten.cloneNode(true))
+						}
+						//删除多的conten
+						ordersright.removeChild(ordersright.lastElementChild)
+						
+						let v=0
+						myshops = document.querySelectorAll('.myshops')
+						var myshopsli = document.querySelector('.myshops>li:nth-of-type(1)')
+						// for(var t=0;t<arr2.length;t++){
+						arr2.forEach((val,t,arr2)=>{
+							v++
+							var time = 'time'+v
+							var states = 'states'+v
+							var allpic='allpic' +v
+							
+							time = document.querySelector('.ordersright>div:nth-of-type('+v+')>.time>p:nth-of-type(1)>span')
+							states = document.querySelector('.ordersright>div:nth-of-type('+v+')>.time>p:nth-of-type(2)>span')
+							allpic = document.querySelector('.ordersright>div:nth-of-type('+v+')>p')
+							
+							time.innerHTML=arr2[t].time
+							states.innerHTML=arr2[t].states
+							allpic.innerHTML='总计:'+arr2[t].allpic+'元'
+							
+							
+							//修改订单状态
+							//判断点击后的状态
+							let states3=''
+							var zhuangtai1=document.querySelector('.ordersright>div:nth-of-type('+v+')>.zhuangtai')
+							var zhuangtai=document.querySelectorAll('.ordersright>div:nth-of-type('+v+')>.zhuangtai>li')
+							zhuangtai.forEach((val,n,zhuangtai)=>{
+								zhuangtai[n].onclick=()=>{
+									states3=zhuangtai[n].innerHTML
+									states.innerHTML=states3
+									var ajax = new XMLHttpRequest()
+									ajax.open('post','http://localhost:3000/houtai/orders/xiugai')
+									ajax.send(JSON.stringify({states:states3,time:arr2[t].time}))
+									ajax.onreadystatechange=function(){
+										if(ajax.readyState==4&&ajax.status==200){
+											console.log(ajax.responseText)
+										}
+									}
+									zhuangtai1.style.display='none'
+									console.log(states3)
+								}
+							})
+							//修改订单状态
+							var xiugai2='xiugai2'+v
+							xiugai2=document.querySelector('.ordersright>div:nth-of-type('+v+')>.xiugai2')
+							xiugai2.onclick=()=>{
+								zhuangtai1.style.display='block'
+								setTimeout(function(){
+									zhuangtai1.style.display='flex'
+								},5)
+							}
+							
+							for(var b=0;b<arr2[t].info.length;b++){
+								myshops[t].appendChild(myshopsli.cloneNode(true))
+							}
+							myshops[t].removeChild(myshops[t].firstElementChild)
+							
+							//给每个li渲染数据
+							let p=0
+							let aaa=arr2[t].info
+							
+							aaa.forEach(function(val,l,aaa){
+								p++
+								//每一个option元素
+								var shopname='shopname'+p
+								var num='num'+p
+								var pic='shoplei'+p
+								var src='src'+p
+								
+								src = document.querySelector('.conten:nth-of-type('+v+')>.myshops>li:nth-of-type('+p+')>img')
+								shopname=document.querySelector('.conten:nth-of-type('+v+')>.myshops>li:nth-of-type('+p+')>p:nth-of-type(1)')
+								num=document.querySelector('.ordersright>div:nth-of-type('+v+')>.myshops>li:nth-of-type('+p+')>p:nth-of-type(2)')
+								pic=document.querySelector('.ordersright>div:nth-of-type('+v+')>.myshops>li:nth-of-type('+p+')>p:nth-of-type(3)')
+								
+								src.setAttribute('src',aaa[l].src)     
+								shopname.innerHTML=aaa[l].shopname
+								num.innerHTML=aaa[l].num
+								pic.innerHTML=aaa[l].pic+'元'
+								
+								// console.log(src)
+							})
+						})
+						
+						//数据可视化
+						var echart2=document.querySelector('.echart2')
+						var echar4=document.querySelector('.echar4')
+						var close4=document.querySelector('.close4')
+						echart2.onclick=()=>{
+							echar4.style.display='block'
+							//找到商品以及数量
+							var allshops=JSON.parse(ajax.responseText)
+							let arr=[]
+							for(var a=0;a<allshops.length;a++){
+								let c=0
+								let obj={name:'',value:''}
+								for(var s=0;s<allshops.length;s++){
+									if(allshops[a].shopname==allshops[s].shopname){
+										c++
+										obj.name=allshops[a].shopname
+									}
+								}
+								obj.value=c
+								arr.push(obj)
+							}
+							// console.log(arr)
+							//数组去重
+							for(var m3=0;m3<arr.length;m3++){
+								let g1=0
+								for(var n2=0;n2<arr.length;n2++){
+									if(arr[m3].name==arr[n2].name){
+										g1++
+										if(g1>1){
+											arr.splice(n2,1)
+										}
+									}
+								}
+							}
+							console.log(arr)
+							
+							// 基于准备好的dom，初始化echarts实例
+							var myChart = echarts.init(document.getElementsByClassName('echars4')[0]);
+							myChart.showLoading();
+							setTimeout(function(){
+								 myChart.hideLoading();
+								 var option = {
+									 title: {
+									   text: '商品信息占比',
+									   textStyle:{
+										color:'pink',
+										fontStyle:'italic',
+										fontWeight:'bold',
+										fontFamily:'Arial',
+										textBorderColor:'green',
+										textBorderWidth:'2',
+										textBorderDashOffset:'2'
+									   }
+									 },
+								   series: [
+									 {
+									   type: 'pie',
+									   data:arr
+									 }
+								   ]
+								 };
+									
+								// 使用刚指定的配置项和数据显示图表。
+								myChart.setOption(option);
+								// setTimeout(function(){
+								// 	myChart.dispose()
+								// },3000)
+							},1000)
+						}
+						close4.onclick=()=>{
+							echar4.style.display='none'
+						}
+					}
+				}
+			}
+			
+		</script>
+	</body>
+</html>
